@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import "./util/env.ts";
+import "./util/env";
 import { fetchCampaignData } from "./util/api.ts";
 import { languages } from "./util/i18n.ts";
 import { CACHE_DIR } from "./util/storage.ts";

@@ -1,6 +1,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import "./util/env.ts";
+import { ascend, sortWith } from "ramda";
+import icons from "../cache/icons.json";
 import type {
   CampaignListItem,
   CampaignNarrationIndex,
@@ -11,9 +13,12 @@ import type {
   ArkhamCardsCampaignsFile,
   Narration,
 } from "../src/slices/shared/model/arkhamCards.ts";
-import { unique } from "../src/slices/shared/util";
 import { languages } from "./util/i18n.ts";
 import { CACHE_DIR, PUBLIC_DIR } from "./util/storage.ts";
+
+const findIcon = (id: string) => {
+  return icons[id] || id;
+};
 
 function safeCampaignFilename(id: string) {
   return id.replaceAll("/", "_");
@@ -98,6 +103,34 @@ function collectNarratedSteps(root: unknown): NarratedStep[] {
   return out.filter(isNarratedStep);
 }
 
+/** `collectNarratedSteps` uses a LIFO graph walk and is not in source-JSON order. Prefer `steps[]` as written in cache. */
+function narratedStepsFromNode(node: unknown): NarratedStep[] {
+  if (node && typeof node === "object" && "steps" in (node as object)) {
+    const stepsRaw = (node as { steps?: unknown[] }).steps;
+    if (Array.isArray(stepsRaw) && stepsRaw.length > 0) {
+      const keyOf = (s: NarratedStep) => s.narration.id || `${s.id}:${s.type}`;
+      const ordered: NarratedStep[] = [];
+      const seen = new Set<string>();
+      for (const item of stepsRaw) {
+        const step = toNarratedStep(item);
+        if (step) {
+          const k = keyOf(step);
+          if (!seen.has(k)) {
+            seen.add(k);
+            ordered.push(step);
+          }
+        }
+      }
+      if (ordered.length > 0) {
+        const inOrdered = new Set(ordered.map(keyOf));
+        const extra = collectNarratedSteps(node).filter((s) => !inOrdered.has(keyOf(s)));
+        return [...ordered, ...extra];
+      }
+    }
+  }
+  return collectNarratedSteps(node);
+}
+
 type ScenarioLike = {
   id: string;
   scenario_name?: string;
@@ -113,7 +146,7 @@ function isScenarioLike(value: unknown): value is ScenarioLike {
 }
 
 function toScenarioIndex(scenario: ScenarioLike): NarrationScenarioIndex | null {
-  const steps = collectNarratedSteps(scenario);
+  const steps = narratedStepsFromNode(scenario);
   if (steps.length === 0) return null;
 
   return {
@@ -123,7 +156,20 @@ function toScenarioIndex(scenario: ScenarioLike): NarrationScenarioIndex | null 
       (typeof scenario.full_name === "string" && scenario.full_name) ||
       scenario.id,
     steps,
+    icon: findIcon(scenario.id),
   };
+}
+
+function filterScenariosByLanguage(
+  scenarios: NarrationScenarioIndex[],
+  language: string,
+): NarrationScenarioIndex[] {
+  return scenarios
+    .map((s) => ({
+      ...s,
+      steps: s.steps.filter((step) => step.narration.lang.includes(language)),
+    }))
+    .filter((s) => s.steps.length > 0);
 }
 
 export async function run() {
@@ -162,7 +208,7 @@ export async function run() {
         for (const s of scenarios) {
           for (const step of s.steps) scenarioNarrationIds.add(step.narration.id);
         }
-        const campaignSteps = collectNarratedSteps(campaign).filter(
+        const campaignSteps = narratedStepsFromNode(campaign).filter(
           (s) => !scenarioNarrationIds.has(s.narration.id),
         );
         if (campaignSteps.length > 0) {
@@ -173,15 +219,9 @@ export async function run() {
           });
         }
 
-        if (scenarios.length === 0) return null;
+        const scenariosForLanguage = filterScenariosByLanguage(scenarios, language);
 
-        const langs = unique(
-          scenarios.flatMap((s) => {
-            return s.steps.flatMap((step) => step.narration.lang);
-          }),
-        );
-
-        if (!langs.includes(language)) {
+        if (scenariosForLanguage.length === 0) {
           return null;
         }
 
@@ -189,28 +229,39 @@ export async function run() {
           id: campaign.id,
           name: campaign.name,
           position: campaign.position,
-          scenarios,
+          type: campaign.campaign_type,
+          scenarios: scenariosForLanguage,
+          icon: findIcon(campaign.id),
         };
 
         return reduced;
       })
-      .filter(isNotNull)
-      .sort((a, b) => a.position - b.position);
+      .filter(isNotNull);
+    // .sort((a, b) => {
+    //   const aSide = Number(a.id === "side");
+    //   const bSide = Number(b.id === "side");
+    //   if (aSide !== bSide) return aSide - bSide;
+    //   return a.position - b.position;
+    // });
+    const sortedCampaigns = sortWith(
+      [
+        ascend((c) => c.type),
+        ascend((c) => c.position),
+        ascend((c) => c.id === "side"),
+        ascend((c) => c.position),
+        ascend((c) => c.id.startsWith("rt")),
+      ],
+      campaigns,
+    );
 
-    for (const c of campaigns) {
+    for (const c of sortedCampaigns) {
       const outCampaignFile = path.join(outLangDir, `${safeCampaignFilename(c.id)}.json`);
       writeFileSync(outCampaignFile, JSON.stringify(c, null, 2));
     }
 
     const listFile = path.join(campaignsBaseDir, `${language}.json`);
-    writeFileSync(
-      listFile,
-      JSON.stringify(
-        campaigns.map((c) => ({ id: c.id, name: c.name, position: c.position })),
-        null,
-        2,
-      ),
-    );
+
+    writeFileSync(listFile, JSON.stringify(sortedCampaigns, null, 2));
     console.log(`campaigns list saved: ${listFile} (${campaigns.length} campaigns)`);
   }
 }

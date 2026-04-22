@@ -1,13 +1,17 @@
 import { AppContext, type CampaignsListFile, DEFAULT_LANGUAGE } from "@shared";
-import { type PropsWithChildren, useState } from "react";
+import { fetchCampaigns } from "@shared/api/client";
+import { type PropsWithChildren, useEffect, useState } from "react";
+import { useLocation } from "wouter";
 
 export function AppContextProvider({ children }: PropsWithChildren) {
-  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
+  const [pathname] = useLocation();
+  const language = pathname.split("/").filter(Boolean)[0] || DEFAULT_LANGUAGE;
+
   const [campaigns, setCampaigns] = useState<CampaignsListFile>([]);
 
-  return (
-    <AppContext.Provider value={{ language, campaigns, setLanguage, setCampaigns }}>
-      {children}
-    </AppContext.Provider>
-  );
+  useEffect(() => {
+    fetchCampaigns(language).then(setCampaigns);
+  }, [language]);
+
+  return <AppContext.Provider value={{ language, campaigns }}>{children}</AppContext.Provider>;
 }

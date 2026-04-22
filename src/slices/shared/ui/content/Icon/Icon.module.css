@@ -1,0 +1,12 @@
+.root {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  container-type: size;
+  container-name: icon;
+  min-height: 1em;
+}
+
+.icon {
+  font-size: 1em;
+}

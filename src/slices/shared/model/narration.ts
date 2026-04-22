@@ -9,6 +9,8 @@ export type CampaignListItem = {
   id: string;
   name: string;
   position: number;
+  type: string;
+  icon: string;
 };
 
 export type CampaignsListFile = CampaignListItem[];
@@ -25,6 +27,8 @@ export type CampaignNarrationIndex = {
   id: string;
   name: string;
   position: number;
+  type: string;
+  icon: string;
   scenarios: NarrationScenarioIndex[];
 };
 
@@ -32,4 +36,5 @@ export type NarrationScenarioIndex = {
   id: string;
   name: string;
   steps: NarratedStep[];
+  icon: string;
 };

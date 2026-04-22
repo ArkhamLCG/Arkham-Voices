@@ -1,11 +1,10 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { languages } from "./languages.json";
 
-export const AVAILABLE_LANGUAGES = import.meta.env.VITE_APP_LANGUAGE_LIST?.split(",") ?? [];
+export const AVAILABLE_LANGUAGES = languages;
 
-export type AvailableLanguage = (typeof AVAILABLE_LANGUAGES)[number];
-
-export const LANGUAGE_LABELS: Record<AvailableLanguage, string> = {
+export const LANGUAGE_LABELS: Record<string, string> = {
   en: "English",
   de: "Deutsch",
   es: "Español",
@@ -31,12 +30,14 @@ void i18n.use(initReactI18next).init({
       translation: {
         app: { title: "Arkham Voices" },
         header: { language: "Language" },
+        breadcrumbs: { campaigns: "Campaigns" },
       },
     },
     ru: {
       translation: {
         app: { title: "Arkham Voices" },
         header: { language: "Язык" },
+        breadcrumbs: { campaigns: "Кампании" },
       },
     },
   },

@@ -3,17 +3,24 @@ import { CampaignPage } from "@pages/campaign";
 import { HomePage } from "@pages/home";
 import { NotFoundPage } from "@pages/not-found";
 import { Header } from "@widgets/header";
-import { Route, Switch } from "wouter";
-import { AppContextProvider, AppThemeProvider, LanguageProvider } from "../providers";
+import { Route, Router, Switch } from "wouter";
+import { AppContextProvider, AppThemeProvider } from "../providers";
 
 export function App() {
   return (
-    <AppContextProvider>
-      <AppThemeProvider>
-        <LanguageProvider>
+    <Router base={import.meta.env.BASE_URL}>
+      <AppContextProvider>
+        <AppThemeProvider>
           <Stack sx={{ flex: 1, minHeight: "100vh" }}>
             <Header />
-            <Box component="main" sx={{ py: 4 }}>
+            <Box
+              component="main"
+              sx={{
+                flex: 1,
+                minWidth: 0,
+                py: { xs: 2, sm: 4 },
+              }}
+            >
               <Switch>
                 <Route path="/:language/campaign/:campaignId" component={CampaignPage} />
                 <Route path="/:language" component={HomePage} />
@@ -22,8 +29,8 @@ export function App() {
               </Switch>
             </Box>
           </Stack>
-        </LanguageProvider>
-      </AppThemeProvider>
-    </AppContextProvider>
+        </AppThemeProvider>
+      </AppContextProvider>
+    </Router>
   );
 }
