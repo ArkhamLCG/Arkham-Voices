@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-export const AVAILABLE_LANGUAGES = process.env.VITE_APP_LANGUAGE_LIST?.split(",") ?? [];
+export const AVAILABLE_LANGUAGES = import.meta.env.VITE_APP_LANGUAGE_LIST?.split(",") ?? [];
 
 export type AvailableLanguage = (typeof AVAILABLE_LANGUAGES)[number];
 
@@ -20,8 +20,10 @@ export const LANGUAGE_LABELS: Record<AvailableLanguage, string> = {
   zh_cn: "中文 (简体)",
 };
 
+export const DEFAULT_LANGUAGE = "en";
+
 void i18n.use(initReactI18next).init({
-  fallbackLng: "en",
+  fallbackLng: DEFAULT_LANGUAGE,
   supportedLngs: AVAILABLE_LANGUAGES,
   interpolation: { escapeValue: false },
   resources: {

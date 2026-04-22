@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     biome:
-      run: npx biome check --write src
+      run: npx biome check --write src cli
       stage_fixed: true
 
 commit-msg:

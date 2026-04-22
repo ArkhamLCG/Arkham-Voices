@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./slices/shared/config/i18n";
-import { App } from "./slices/app";
-import "./slices/app/styles/index.css";
+import "@shared/config/i18n";
+import { App } from "@app";
+import "@app/styles/index.css";
 
 const rootEl = document.getElementById("root");
 if (!rootEl) {

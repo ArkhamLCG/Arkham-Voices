@@ -16,3 +16,9 @@
 .readTheDocs {
   opacity: 0.7;
 }
+
+.code {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+}

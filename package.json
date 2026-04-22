@@ -7,11 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
-    "lint": "biome check src",
-    "format": "biome format --write src",
+    "lint": "biome check src cli",
+    "format": "biome format --write src cli",
     "prepare": "lefthook install",
     "preview": "vite preview",
-    "postinstall": "sh cli/postinstall.sh"
+    "postinstall": "sh cli/sh/postinstall.sh",
+    "build:narration": "tsx cli/keep-narration.ts",
+    "language:detect": "tsx cli/detect-languages.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -23,8 +25,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-i18next": "^17.0.4",
-    "wouter": "^3.9.0",
-    "zustand": "^5.0.12"
+    "wouter": "^3.9.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",

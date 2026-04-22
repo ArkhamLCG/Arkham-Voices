@@ -1,29 +1,29 @@
-import { Box } from "@mui/material";
-import { useEffect } from "react";
+import { Box, Stack } from "@mui/material";
+import { CampaignPage } from "@pages/campaign";
+import { HomePage } from "@pages/home";
+import { NotFoundPage } from "@pages/not-found";
+import { Header } from "@widgets/header";
 import { Route, Switch } from "wouter";
-import { HomePage } from "../../pages/home";
-import { NotFoundPage } from "../../pages/not-found";
-import { i18n } from "../../shared/config";
-import { useAppStore } from "../../shared/lib";
-import { Header } from "../../widgets/header";
-import { AppThemeProvider } from "../providers";
+import { AppContextProvider, AppThemeProvider, LanguageProvider } from "../providers";
 
 export function App() {
-  const language = useAppStore((s) => s.language);
-
-  useEffect(() => {
-    i18n.changeLanguage(language);
-  }, [language]);
-
   return (
-    <AppThemeProvider>
-      <Header />
-      <Box component="main" sx={{ py: 4 }}>
-        <Switch>
-          <Route path="/" component={HomePage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </Box>
-    </AppThemeProvider>
+    <AppContextProvider>
+      <AppThemeProvider>
+        <LanguageProvider>
+          <Stack sx={{ flex: 1, minHeight: "100vh" }}>
+            <Header />
+            <Box component="main" sx={{ py: 4 }}>
+              <Switch>
+                <Route path="/:language/campaign/:campaignId" component={CampaignPage} />
+                <Route path="/:language" component={HomePage} />
+                <Route path="/" component={HomePage} />
+                <Route component={NotFoundPage} />
+              </Switch>
+            </Box>
+          </Stack>
+        </LanguageProvider>
+      </AppThemeProvider>
+    </AppContextProvider>
   );
 }

@@ -9,22 +9,18 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { AVAILABLE_LANGUAGES, type AvailableLanguage, LANGUAGE_LABELS } from "@shared/config";
+import { useAppContext } from "@shared/lib";
 import { useTranslation } from "react-i18next";
-import {
-  AVAILABLE_LANGUAGES,
-  type AvailableLanguage,
-  LANGUAGE_LABELS,
-} from "../../../shared/config";
-import { useAppStore } from "../../../shared/lib/store";
+import { navigate } from "wouter/use-browser-location";
 
 export function Header() {
   const { t, i18n } = useTranslation();
-  const language = useAppStore((s) => s.language) as AvailableLanguage;
-  const setLanguage = useAppStore((s) => s.setLanguage);
+  const { language } = useAppContext();
 
   const onChangeLanguage = async (next: AvailableLanguage) => {
-    setLanguage(next);
     await i18n.changeLanguage(next);
+    navigate(`/${next}`);
   };
 
   return (
