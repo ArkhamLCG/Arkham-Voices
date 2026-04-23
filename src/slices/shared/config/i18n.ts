@@ -31,7 +31,7 @@ void i18n.use(initReactI18next).init({
         app: { title: "Arkham Voices" },
         header: { language: "Language" },
         home: {
-          lead: "Arkham Voices is where you can stream and download full narration for Arkham Horror: The Card Game—campaigns, scenarios, and the stories between them, all in one place.",
+          lead: "Arkham Voices is where you can stream and download narration for Arkham Horror: The Card Game—campaigns, scenarios, and the stories between them, all in one place. Special thanks to Daniel Salinas and the entire Arkham Cards and Dissonant Voices teams for creating campaign narration.",
         },
         breadcrumbs: { home: "Home", campaigns: "Campaigns" },
         footer: {
