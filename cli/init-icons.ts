@@ -33,8 +33,12 @@ export async function run() {
       }
     }
   }
+  const mapping = {
+    ...iconMapping,
+    core: "core",
+  };
   mkdirSync(CACHE_DIR, { recursive: true });
-  writeFileSync(outFile, JSON.stringify(iconMapping, null, 2));
+  writeFileSync(outFile, JSON.stringify(mapping, null, 2));
 }
 
 run();

@@ -1,7 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import "./util/env.ts";
-import { ascend, sortWith } from "ramda";
+import { ascend, pick, sortWith } from "ramda";
 import icons from "../cache/icons.json";
 import type {
   CampaignListItem,
@@ -16,7 +16,10 @@ import type {
 import { languages } from "./util/i18n.ts";
 import { CACHE_DIR, PUBLIC_DIR } from "./util/storage.ts";
 
-const findIcon = (id: string) => {
+const findIcon = (id: string, campaignId?: string) => {
+  if (id === "campaign" && campaignId) {
+    return icons[campaignId] || campaignId;
+  }
   return icons[id] || id;
 };
 
@@ -180,7 +183,10 @@ function orderScenariosByCampaign(scenarios: ScenarioLike[], order: unknown): Sc
   return out;
 }
 
-function toScenarioIndex(scenario: ScenarioLike): NarrationScenarioIndex | null {
+function toScenarioIndex(
+  scenario: ScenarioLike,
+  campaignId: string,
+): NarrationScenarioIndex | null {
   const steps = narratedStepsFromNode(scenario);
   if (steps.length === 0) return null;
 
@@ -191,7 +197,7 @@ function toScenarioIndex(scenario: ScenarioLike): NarrationScenarioIndex | null 
       (typeof scenario.full_name === "string" && scenario.full_name) ||
       scenario.id,
     steps,
-    icon: findIcon(scenario.id),
+    icon: findIcon(scenario.id, campaignId),
   };
 }
 
@@ -238,7 +244,7 @@ export async function run() {
         const scenarios =
           orderedScenarioLikes.length > 0
             ? (orderedScenarioLikes
-                .map(toScenarioIndex)
+                .map((s) => toScenarioIndex(s, campaign.id))
                 .filter(Boolean) as NarrationScenarioIndex[])
             : [];
 
@@ -300,8 +306,9 @@ export async function run() {
     }
 
     const listFile = path.join(campaignsBaseDir, `${language}.json`);
+    const campaignsList = sortedCampaigns.map(pick(["id", "name", "position", "type", "icon"]));
 
-    writeFileSync(listFile, JSON.stringify(sortedCampaigns, null, 2));
+    writeFileSync(listFile, JSON.stringify(campaignsList, null, 2));
     console.log(`campaigns list saved: ${listFile} (${campaigns.length} campaigns)`);
   }
 }

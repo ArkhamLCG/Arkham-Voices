@@ -12,6 +12,7 @@
     "prepare": "lefthook install",
     "preview": "vite preview",
     "postinstall": "sh cli/sh/postinstall.sh",
+    "icons": "tsx cli/init-icons.ts",
     "build:narration": "tsx cli/keep-narration.ts",
     "language:detect": "tsx cli/detect-languages.ts"
   },
