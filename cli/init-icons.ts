@@ -1,4 +1,4 @@
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import "./util/env";
 import path from "node:path";
 import type { ArkhamDivider } from "arkham-divider-data";
@@ -33,6 +33,7 @@ export async function run() {
       }
     }
   }
+  mkdirSync(CACHE_DIR, { recursive: true });
   writeFileSync(outFile, JSON.stringify(iconMapping, null, 2));
 }
 
