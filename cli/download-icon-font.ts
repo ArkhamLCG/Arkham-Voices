@@ -25,6 +25,7 @@ export async function run() {
   await download("woff2");
   await download("ttf");
   await download("css");
+  await download("json");
 }
 
 run();

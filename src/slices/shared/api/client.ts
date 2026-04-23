@@ -6,6 +6,10 @@ function apiPath(path: string) {
   return `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
 }
 
+export function fetchIcons() {
+  return fetch(apiPath(`icons/icons.json`)).then(asJSON);
+}
+
 export function fetchCampaigns(language: string) {
   return fetch(apiPath(`api/campaigns/${language}.json`)).then(asJSON);
 }

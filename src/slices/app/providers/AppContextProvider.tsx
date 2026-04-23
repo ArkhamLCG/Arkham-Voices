@@ -3,9 +3,10 @@ import {
   AVAILABLE_LANGUAGES,
   type CampaignsListFile,
   DEFAULT_LANGUAGE,
+  type IconEntry,
   i18n,
 } from "@shared";
-import { fetchCampaigns } from "@shared/api/client";
+import { fetchCampaigns, fetchIcons } from "@shared/api/client";
 import { detectBrowserLanguage, useHashPathname } from "@shared/lib";
 import { type PropsWithChildren, useEffect, useState } from "react";
 
@@ -15,11 +16,18 @@ export function AppContextProvider({ children }: PropsWithChildren) {
   const language = langFromPath || detectBrowserLanguage(AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE);
 
   const [campaigns, setCampaigns] = useState<CampaignsListFile>([]);
+  const [icons, setIcons] = useState<Record<string, IconEntry>>({});
 
   useEffect(() => {
     i18n.changeLanguage(language);
     fetchCampaigns(language).then(setCampaigns);
   }, [language]);
 
-  return <AppContext.Provider value={{ language, campaigns }}>{children}</AppContext.Provider>;
+  useEffect(() => {
+    fetchIcons().then(setIcons);
+  }, []);
+
+  return (
+    <AppContext.Provider value={{ language, campaigns, icons }}>{children}</AppContext.Provider>
+  );
 }

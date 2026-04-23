@@ -40,8 +40,7 @@ function uniqueNarrationLangsFromCampaignsFile(data: ArkhamCardsCampaignsFile): 
 const input = path.join(CACHE_DIR, "campaigns", "en.json");
 const data = JSON.parse(readFileSync(input, "utf8")) as ArkhamCardsCampaignsFile;
 const languages = uniqueNarrationLangsFromCampaignsFile(data);
-const payload = { languages };
 
-writeFileSync(OUT, `${JSON.stringify(payload)}\n`, "utf8");
+writeFileSync(OUT, JSON.stringify(languages, null, 2), "utf8");
 console.log(`Wrote ${languages.length} codes → ${OUT}`);
 console.log(languages.join(", "));

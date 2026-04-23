@@ -4,9 +4,11 @@
   align-items: center;
   container-type: size;
   container-name: icon;
+  min-width: 1em;
   min-height: 1em;
 }
 
 .icon {
-  font-size: 1em;
+  display: block;
+  line-height: 1;
 }
