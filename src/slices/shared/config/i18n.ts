@@ -33,7 +33,7 @@ void i18n.use(initReactI18next).init({
         home: {
           lead: "Arkham Voices is where you can stream and download full narration for Arkham Horror: The Card Game—campaigns, scenarios, and the stories between them, all in one place.",
         },
-        breadcrumbs: { home: "Home" },
+        breadcrumbs: { home: "Home", campaigns: "Campaigns" },
         footer: {
           support: "Support the project",
           patreon: "Patreon",
@@ -53,7 +53,7 @@ void i18n.use(initReactI18next).init({
         home: {
           lead: "Arkham Voices — проект для прослушивания озвучки кампаний и сценариев для Карточного Ужаса Аркхэма.",
         },
-        breadcrumbs: { home: "Главная" },
+        breadcrumbs: { home: "Главная", campaigns: "Кампании" },
         footer: {
           support: "Поддержка проекта",
           patreon: "Patreon",
