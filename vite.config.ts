@@ -1,4 +1,3 @@
-import favicons from "@peterek/vite-plugin-favicons";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
@@ -8,16 +7,7 @@ const base = process.env.GH_ACTIONS === "true" && repoName ? `/${repoName}/` : "
 
 export default defineConfig({
   base,
-  plugins: [
-    react(),
-    favicons("./src/assets/favicon.svg", {
-      path: base,
-      ...(base !== "/" && {
-        scope: base,
-        start_url: `${base.replace(/\/$/, "")}/?homescreen=1`,
-      }),
-    }),
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
       "@app": "/src/slices/app",

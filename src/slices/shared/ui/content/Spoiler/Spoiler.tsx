@@ -40,11 +40,14 @@ export function Spoiler({ children, onClick, sx, ...rest }: SpoilerProps) {
       }}
       sx={[
         {
-          maxWidth: "100%",
           cursor: "pointer",
           userSelect: revealed ? "text" : "none",
           ...(revealed
-            ? { display: "inline", borderRadius: 0.5 }
+            ? {
+                display: "inline-block",
+                verticalAlign: "baseline",
+                borderRadius: 0.5,
+              }
             : {
                 /* 2 lines without -webkit-line-clamp (it often still draws "…" despite text-overflow: clip) */
                 display: "inline-block",
@@ -64,10 +67,10 @@ export function Spoiler({ children, onClick, sx, ...rest }: SpoilerProps) {
         <Box
           component="span"
           sx={(theme) => {
-            const base = theme.palette.grey[800];
+            const base = theme.palette.grey[700];
             /* Only darken — lighten() made bands “lighter” than the text and letters showed through. */
-            const sheenSoft = darken(base, 0.06);
-            const sheenMid = darken(base, 0.12);
+            const sheenSoft = darken(base, 0.04);
+            const sheenMid = darken(base, 0.08);
             return {
               display: "inline",
               minWidth: 0,
@@ -78,12 +81,13 @@ export function Spoiler({ children, onClick, sx, ...rest }: SpoilerProps) {
               borderRadius: 0.5,
               boxDecorationBreak: "clone",
               WebkitBoxDecorationBreak: "clone",
-              bgcolor: "grey.800",
+              bgcolor: "grey.700",
               backgroundImage: `linear-gradient(100deg, ${base} 0%, ${sheenSoft} 42%, ${sheenMid} 50%, ${sheenSoft} 58%, ${base} 100%)`,
               backgroundSize: "200% 100%",
               backgroundRepeat: "no-repeat",
               /* linear + translateZ: smoother than ease-in-out infinite (no "stutter" at repeat) */
-              animation: `${spoilerSheen} 4.8s linear infinite`,
+              animation: `${spoilerSheen} 7.5s linear infinite`,
+              willChange: "background-position",
               transform: "translateZ(0)",
               backfaceVisibility: "hidden",
               "@media (prefers-reduced-motion: reduce)": {

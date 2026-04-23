@@ -65,6 +65,14 @@ export function Header() {
               minWidth: 0,
               flex: "1 1 0",
               pr: 1,
+              WebkitTapHighlightColor: "transparent",
+              "&:visited": { color: "inherit" },
+              "&:active": { color: "inherit" },
+              "&:focus-visible": {
+                outline: "2px solid",
+                outlineColor: "primary.main",
+                outlineOffset: 2,
+              },
             }}
           >
             {t("app.title", "Arkham Voices")}
