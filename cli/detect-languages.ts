@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { ascend, sortWith } from "ramda";
 import type { ArkhamCardsCampaignsFile } from "../src/slices/shared/model/arkhamCards.ts";
 import { CACHE_DIR } from "./util/storage.ts";
 
@@ -34,7 +35,8 @@ function uniqueNarrationLangsFromCampaignsFile(data: ArkhamCardsCampaignsFile): 
     if (Array.isArray(item.scenarios)) for (const s of item.scenarios) walk(s);
   }
 
-  return [...codes].filter((code) => code !== "dv");
+  const list = [...codes].filter((code) => code !== "dv");
+  return sortWith<string>([ascend((c) => (c === "en" ? 0 : 1)), ascend((c) => c)], list);
 }
 
 const input = path.join(CACHE_DIR, "campaigns", "en.json");
