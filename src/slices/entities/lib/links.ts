@@ -9,6 +9,9 @@ export const boostyVoiceHref =
   "https://boosty.to/arkhamhorror_thecardgame/single-payment/donation/367040/target?share=target_link";
 export const tBankVoiceHref = "https://www.tbank.ru/cf/2Icb3EoNfVI";
 
+export const mythosBustersPatreonHref = "https://www.patreon.com/MythosBusters";
+export const dissonantVoicesHref = "https://dissonantvoices.north101.co.uk/";
+
 const externalLink = {
   rel: "noopener noreferrer" as const,
   target: "_blank" as const,

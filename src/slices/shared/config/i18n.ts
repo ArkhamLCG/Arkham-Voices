@@ -43,6 +43,12 @@ void i18n.use(initReactI18next).init({
           appTagline: "My new project",
           appTitle: "Digital Investigator Board",
           iosUnlock: "iOS unlock",
+          enOnlyFan: "This site currently includes narration for fan-made campaigns only.",
+          enOfficialBy:
+            "Narration for official campaigns is provided by the Dissonant Voices project. To use it, you need a Patreon subscription.",
+          enPlayback:
+            "Playback is available in the Arkham Cards app and on the Dissonant Voices website.",
+          patreon: "Patreon",
         },
       },
     },

@@ -2,7 +2,9 @@ import {
   appStoreHref,
   boostyUnlockLink,
   boostyVoiceHref,
+  dissonantVoicesHref,
   externalLink,
+  mythosBustersPatreonHref,
   patreonUnlockLink,
   playStoreHref,
   tBankVoiceHref,
@@ -121,6 +123,36 @@ export function Announces() {
           </Row>
         </Box>
       </Paper>
+
+      {language === "en" ? (
+        <Paper elevation={0} sx={paperSx} variant="outlined">
+          <Stack spacing={1.25}>
+            <Alert severity="info" variant="outlined">
+              {t("announces.enOnlyFan")}
+            </Alert>
+
+            <Typography variant="body2">
+              {t("announces.enOfficialBy")}{" "}
+              <Link href={mythosBustersPatreonHref} underline="hover" {...externalLink}>
+                Mythos Busters Patreon
+              </Link>
+              .
+            </Typography>
+
+            <Typography variant="body2">
+              {t("announces.enPlayback")}{" "}
+              <Link href="https://arkhamcards.com/" underline="hover" {...externalLink}>
+                Arkham Cards
+              </Link>{" "}
+              |{" "}
+              <Link href={dissonantVoicesHref} underline="hover" {...externalLink}>
+                Dissonant Voices
+              </Link>
+              .
+            </Typography>
+          </Stack>
+        </Paper>
+      ) : null}
 
       {language === "ru" ? (
         <Paper elevation={0} sx={paperSx} variant="outlined">
