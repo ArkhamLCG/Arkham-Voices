@@ -1,8 +1,6 @@
 import { Box, Container, Link, Typography } from "@mui/material";
+import { footerBoostyHref, footerPatreonHref, footerTBankHref } from "@shared/config";
 import { useTranslation } from "react-i18next";
-
-const PATREON_URL = "https://www.patreon.com/arkhamdivider";
-const BOOSTY_URL = "https://boosty.to/arkham.divider";
 
 export function Footer() {
   const { t } = useTranslation();
@@ -49,7 +47,17 @@ export function Footer() {
           >
             <Link
               color="primary"
-              href={PATREON_URL}
+              href={footerTBankHref}
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="hover"
+              variant="body2"
+            >
+              {t("footer.t", "T-Bank")}
+            </Link>
+            <Link
+              color="primary"
+              href={footerPatreonHref}
               rel="noopener noreferrer"
               target="_blank"
               underline="hover"
@@ -62,7 +70,7 @@ export function Footer() {
             </Typography>
             <Link
               color="primary"
-              href={BOOSTY_URL}
+              href={footerBoostyHref}
               rel="noopener noreferrer"
               target="_blank"
               underline="hover"

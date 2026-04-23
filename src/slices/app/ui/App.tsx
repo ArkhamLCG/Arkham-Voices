@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import { CampaignPage } from "@pages/campaign";
-import { HomePage } from "@pages/home";
+import { HomePage, RootRedirectPage } from "@pages/home";
 import { NotFoundPage } from "@pages/not-found";
 import { Footer } from "@widgets/footer";
 import { Header } from "@widgets/header";
@@ -36,7 +36,7 @@ export function App() {
               <Switch>
                 <Route path="/:language/campaign/:campaignId" component={CampaignPage} />
                 <Route path="/:language" component={HomePage} />
-                <Route path="/" component={HomePage} />
+                <Route path="/" component={RootRedirectPage} />
                 <Route component={NotFoundPage} />
               </Switch>
             </Box>
