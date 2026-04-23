@@ -62,11 +62,18 @@ function toNarratedStep(value: unknown): NarratedStep | null {
   const narration = v.narration as Narration | undefined;
   if (!narration) return null;
   if (!Array.isArray(narration.lang) || narration.lang.length === 0) return null;
-  if (typeof v.id !== "string" || typeof v.type !== "string") return null;
+  if (typeof v.id !== "string") return null;
+
+  const typeRaw = v.type;
+  const type =
+    typeof typeRaw === "string"
+      ? typeRaw
+      : // Some story steps in ArkhamCards caches omit `"type": "story"`, but still have narration + text.
+        "story";
 
   return {
     id: v.id,
-    type: v.type,
+    type,
     title: typeof v.title === "string" ? v.title : undefined,
     text: typeof v.text === "string" ? v.text : undefined,
     narration,
@@ -77,10 +84,7 @@ function collectNarratedSteps(root: unknown): NarratedStep[] {
   const out: NarratedStep[] = [];
   const seen = new Set<string>(); // prefer narration id as stable unique key
 
-  const stack: unknown[] = [root];
-  while (stack.length > 0) {
-    const cur = stack.pop();
-
+  const walk = (cur: unknown) => {
     const step = toNarratedStep(cur);
     if (step) {
       const key = step.narration.id || `${step.id}:${step.type}`;
@@ -91,14 +95,17 @@ function collectNarratedSteps(root: unknown): NarratedStep[] {
     }
 
     if (Array.isArray(cur)) {
-      for (const item of cur) stack.push(item);
-      continue;
+      for (const item of cur) walk(item);
+      return;
     }
 
     if (cur && typeof cur === "object") {
-      for (const val of Object.values(cur as Record<string, unknown>)) stack.push(val);
+      const obj = cur as Record<string, unknown>;
+      for (const k of Object.keys(obj)) walk(obj[k]);
     }
-  }
+  };
+
+  walk(root);
 
   return out.filter(isNarratedStep);
 }
@@ -216,6 +223,7 @@ export async function run() {
             id: "campaign",
             name: "Campaign",
             steps: campaignSteps,
+            icon: findIcon(campaign.id),
           });
         }
 
