@@ -37,14 +37,16 @@ jobs:
       - name: Install
         run: npm ci
         env:
-          GH_ACTIONS: "true"
-          GH_REPOSITORY: ${{ github.repository }}
           VITE_NARRATION_BASE_URL: ${{ secrets.VITE_NARRATION_BASE_URL }}
           VITE_RU_NARRATION_BASE_URL: ${{ secrets.VITE_RU_NARRATION_BASE_URL }}
           VITE_ARKHAM_DIVIDER_DATA_URL: ${{ secrets.VITE_ARKHAM_DIVIDER_DATA_URL }}
 
       - name: Build
         run: npm run build
+        env:
+          GH_ACTIONS: "true"
+          GH_REPOSITORY: ${{ github.repository }}
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
