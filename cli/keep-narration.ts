@@ -152,6 +152,34 @@ function isScenarioLike(value: unknown): value is ScenarioLike {
   return typeof v.id === "string";
 }
 
+function orderScenariosByCampaign(scenarios: ScenarioLike[], order: unknown): ScenarioLike[] {
+  if (!Array.isArray(order) || order.length === 0) return scenarios;
+  const orderIds = order.filter((x): x is string => typeof x === "string");
+  if (orderIds.length === 0) return scenarios;
+
+  const byId = new Map<string, ScenarioLike>();
+  for (const s of scenarios) {
+    if (!byId.has(s.id)) byId.set(s.id, s);
+  }
+
+  const out: ScenarioLike[] = [];
+  const used = new Set<string>();
+  for (const id of orderIds) {
+    const hit = byId.get(id);
+    if (hit) {
+      out.push(hit);
+      used.add(id);
+    }
+  }
+
+  // Keep any extra scenarios (unknown to `campaign.scenarios`) at the end, preserving input order.
+  for (const s of scenarios) {
+    if (!used.has(s.id)) out.push(s);
+  }
+
+  return out;
+}
+
 function toScenarioIndex(scenario: ScenarioLike): NarrationScenarioIndex | null {
   const steps = narratedStepsFromNode(scenario);
   if (steps.length === 0) return null;
@@ -203,12 +231,16 @@ export async function run() {
       .map((entry) => {
         const campaign = entry.campaign;
         const scenariosRaw = (entry as Record<string, unknown>).scenarios;
-        const scenarios = Array.isArray(scenariosRaw)
-          ? (scenariosRaw
-              .filter(isScenarioLike)
-              .map(toScenarioIndex)
-              .filter(Boolean) as NarrationScenarioIndex[])
+        const scenarioLikes = Array.isArray(scenariosRaw)
+          ? scenariosRaw.filter(isScenarioLike)
           : [];
+        const orderedScenarioLikes = orderScenariosByCampaign(scenarioLikes, campaign.scenarios);
+        const scenarios =
+          orderedScenarioLikes.length > 0
+            ? (orderedScenarioLikes
+                .map(toScenarioIndex)
+                .filter(Boolean) as NarrationScenarioIndex[])
+            : [];
 
         // Keep narrated steps that live on campaign-level (outside scenarios) in a synthetic scenario.
         const scenarioNarrationIds = new Set<string>();
