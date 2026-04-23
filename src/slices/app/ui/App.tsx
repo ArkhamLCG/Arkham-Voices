@@ -13,13 +13,23 @@ export function App() {
     <Router hook={useHashLocation}>
       <AppContextProvider>
         <AppThemeProvider>
-          <Stack sx={{ flex: 1, minHeight: "100vh" }}>
+          <Stack
+            sx={{
+              flex: 1,
+              minWidth: 0,
+              minHeight: "100vh",
+              width: 1,
+              maxWidth: 1,
+            }}
+          >
             <Header />
             <Box
               component="main"
               sx={{
                 flex: 1,
                 minWidth: 0,
+                width: 1,
+                maxWidth: 1,
                 py: { xs: 2, sm: 4 },
               }}
             >

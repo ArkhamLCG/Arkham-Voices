@@ -94,7 +94,7 @@ export function CampaignPage() {
                 <Typography color="text.secondary" component="div" variant="caption">
                   {t("breadcrumbs.campaigns")}
                 </Typography>
-                <Typography component="div" noWrap variant="body1">
+                <Typography component="div" variant="body1">
                   {currentListName}
                 </Typography>
               </Box>
@@ -102,8 +102,6 @@ export function CampaignPage() {
             <Collapse in={mobileNavOpen}>
               <Box
                 sx={{
-                  maxHeight: "min(60vh, 24rem)",
-                  overflow: "auto",
                   pt: 2,
                 }}
               >
@@ -144,7 +142,16 @@ export function CampaignPage() {
                         textAlign: "center",
                       }}
                     />
-                    <Typography sx={{ fontWeight: 600, minWidth: 0, wordBreak: "break-word" }}>
+                    <Typography
+                      sx={{
+                        fontWeight: 600,
+                        minWidth: 0,
+                        wordBreak: "break-word",
+                        flex: 1,
+                        lineHeight: 1.25,
+                        py: 1,
+                      }}
+                    >
                       {scenario.name}
                     </Typography>
                   </Row>
@@ -194,6 +201,7 @@ export function CampaignPage() {
                                 rel="noopener noreferrer"
                                 size="small"
                                 sx={{ flexShrink: 0 }}
+                                download={`${step.narration.id}.mp3`}
                                 target="_blank"
                               >
                                 <DownloadIcon fontSize="small" />

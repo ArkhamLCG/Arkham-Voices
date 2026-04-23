@@ -11,9 +11,8 @@ export function Footer() {
     <Box
       component="footer"
       sx={{
+        borderTop: "1px solid",
         borderColor: "divider",
-        borderTop: 1,
-        bgcolor: "background.paper",
         flexShrink: 0,
         py: { xs: 2, sm: 2.5 },
       }}

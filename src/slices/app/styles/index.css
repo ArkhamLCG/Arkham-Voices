@@ -24,10 +24,12 @@ body {
 
 #root {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem 1.5rem;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 a {
