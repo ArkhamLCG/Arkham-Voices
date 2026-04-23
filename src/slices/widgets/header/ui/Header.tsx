@@ -5,14 +5,14 @@ import {
   Container,
   IconButton,
   MenuItem,
+  Link as MuiLink,
   Select,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import { AVAILABLE_LANGUAGES, LANGUAGE_LABELS } from "@shared/config";
 import { useAppContext } from "@shared/lib";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 
 export function Header() {
   const { t, i18n } = useTranslation();
@@ -51,10 +51,14 @@ export function Header() {
             py: { xs: 0.75, sm: 0.5 },
           }}
         >
-          <Typography
-            variant="h6"
-            component="div"
+          <MuiLink
+            color="inherit"
+            component={Link}
+            href={`/${language}`}
             noWrap
+            underline="hover"
+            variant="h6"
+            aria-label={t("header.home", "Home")}
             sx={{
               fontWeight: 700,
               fontSize: { xs: "1rem", sm: "1.25rem" },
@@ -64,7 +68,7 @@ export function Header() {
             }}
           >
             {t("app.title", "Arkham Voices")}
-          </Typography>
+          </MuiLink>
 
           <Box sx={{ alignItems: "center", display: "flex", flexShrink: 0, gap: 0.5 }}>
             <IconButton

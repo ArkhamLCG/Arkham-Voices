@@ -5,11 +5,12 @@ import { NotFoundPage } from "@pages/not-found";
 import { Footer } from "@widgets/footer";
 import { Header } from "@widgets/header";
 import { Route, Router, Switch } from "wouter";
+import { useHashLocation } from "wouter/use-hash-location";
 import { AppContextProvider, AppThemeProvider } from "../providers";
 
 export function App() {
   return (
-    <Router base={import.meta.env.BASE_URL}>
+    <Router hook={useHashLocation}>
       <AppContextProvider>
         <AppThemeProvider>
           <Stack sx={{ flex: 1, minHeight: "100vh" }}>
