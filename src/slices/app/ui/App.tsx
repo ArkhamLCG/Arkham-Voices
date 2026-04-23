@@ -2,6 +2,7 @@ import { Box, Stack } from "@mui/material";
 import { CampaignPage } from "@pages/campaign";
 import { HomePage } from "@pages/home";
 import { NotFoundPage } from "@pages/not-found";
+import { Footer } from "@widgets/footer";
 import { Header } from "@widgets/header";
 import { Route, Router, Switch } from "wouter";
 import { AppContextProvider, AppThemeProvider } from "../providers";
@@ -28,6 +29,7 @@ export function App() {
                 <Route component={NotFoundPage} />
               </Switch>
             </Box>
+            <Footer />
           </Stack>
         </AppThemeProvider>
       </AppContextProvider>

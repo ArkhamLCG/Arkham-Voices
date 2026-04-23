@@ -3,8 +3,8 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 // GitHub project page: https://<owner>.github.io/<repo>/
-const repoName = process.env.GITHUB_REPOSITORY?.split("/").at(-1);
-const base = process.env.GITHUB_ACTIONS === "true" && repoName ? `/${repoName}/` : "/";
+const repoName = process.env.GH_REPOSITORY?.split("/").at(-1);
+const base = process.env.GH_ACTIONS === "true" && repoName ? `/${repoName}/` : "/";
 
 export default defineConfig({
   base,

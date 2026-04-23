@@ -31,6 +31,11 @@ void i18n.use(initReactI18next).init({
         app: { title: "Arkham Voices" },
         header: { language: "Language" },
         breadcrumbs: { campaigns: "Campaigns" },
+        footer: {
+          support: "Support the project",
+          patreon: "Patreon",
+          boosty: "Boosty",
+        },
       },
     },
     ru: {
@@ -38,6 +43,11 @@ void i18n.use(initReactI18next).init({
         app: { title: "Arkham Voices" },
         header: { language: "Язык" },
         breadcrumbs: { campaigns: "Кампании" },
+        footer: {
+          support: "Поддержка проекта",
+          patreon: "Patreon",
+          boosty: "Boosty",
+        },
       },
     },
   },
