@@ -8,7 +8,7 @@ const base = process.env.GH_ACTIONS === "true" && repoName ? `/${repoName}/` : "
 
 export default defineConfig({
   base,
-  plugins: [react(), favicons("src/assets/favicon.svg")],
+  plugins: [react(), favicons("./src/assets/favicon.svg")],
   resolve: {
     alias: {
       "@app": "/src/slices/app",
