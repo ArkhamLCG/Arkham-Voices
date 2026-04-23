@@ -7,7 +7,8 @@ export function detectBrowserLanguage(available: readonly string[], fallback: st
     window.navigator.languages?.length ? window.navigator.languages : [window.navigator.language]
   ).filter(Boolean);
 
-  for (const lang of raw) {
+  for (let i = raw.length - 1; i >= 0; i -= 1) {
+    const lang = raw[i];
     const normalized = lang.toLowerCase();
     const underscore = normalized.replace("-", "_");
     const base = normalized.split(/[-_]/)[0] ?? "";
