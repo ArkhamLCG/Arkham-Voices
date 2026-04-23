@@ -6,9 +6,10 @@ import { type KeyboardEvent, type MouseEvent, type ReactNode, useState } from "r
 /** Module-level keyframes so animation is not redefined per render. */
 const spoilerSheen = keyframes`
   0% {
-    background-position: 100% 0;
+    background-position: 0 0;
   }
   100% {
+    /* Move exactly one period for seamless looping */
     background-position: -100% 0;
   }
 `;
@@ -69,8 +70,8 @@ export function Spoiler({ children, onClick, sx, ...rest }: SpoilerProps) {
           sx={(theme) => {
             const base = theme.palette.grey[700];
             /* Only darken — lighten() made bands “lighter” than the text and letters showed through. */
-            const sheenSoft = darken(base, 0.04);
-            const sheenMid = darken(base, 0.08);
+            const sheenSoft = darken(base, 0.24);
+            const sheenMid = darken(base, 0.14);
             return {
               display: "inline",
               minWidth: 0,
@@ -84,9 +85,9 @@ export function Spoiler({ children, onClick, sx, ...rest }: SpoilerProps) {
               bgcolor: "grey.700",
               backgroundImage: `linear-gradient(100deg, ${base} 0%, ${sheenSoft} 42%, ${sheenMid} 50%, ${sheenSoft} 58%, ${base} 100%)`,
               backgroundSize: "200% 100%",
-              backgroundRepeat: "no-repeat",
+              backgroundRepeat: "repeat-x",
               /* linear + translateZ: smoother than ease-in-out infinite (no "stutter" at repeat) */
-              animation: `${spoilerSheen} 7.5s linear infinite`,
+              animation: `${spoilerSheen} 7.5s linear alternate infinite`,
               willChange: "background-position",
               transform: "translateZ(0)",
               backfaceVisibility: "hidden",
