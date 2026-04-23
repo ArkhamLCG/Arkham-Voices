@@ -64,10 +64,9 @@ export function CategoriesList({ sx, ...rest }: BoxProps) {
                       <ListItemText
                         primary={
                           <Stack direction="row" sx={{ alignItems: "center", gap: 1, minWidth: 0 }}>
-                            <Icon
-                              icon={c.icon}
-                              sx={{ flexShrink: 0, width: "1.5em", textAlign: "center" }}
-                            />
+                            <Box sx={{ width: "30px", textAlign: "center" }}>
+                              <Icon icon={c.icon} />
+                            </Box>
                             <Box component="span" sx={{ minWidth: 0, overflowWrap: "break-word" }}>
                               {c.name}
                             </Box>
