@@ -23,6 +23,7 @@ export const download = async (type: string) => {
 export async function run() {
   await download("woff");
   await download("woff2");
+  await download("ttf");
   await download("css");
 }
 
