@@ -9,14 +9,10 @@ export function PageBreadcrumbs(props: PageBreadcrumbsProps) {
   const { t } = useTranslation();
   const { language } = useAppContext();
   const homeHref = `/${language}`;
-  const campaignsLabel = t("breadcrumbs.campaigns", "Campaigns");
+  const campaignsLabel = t("breadcrumbs.home", "Home");
 
   if (props.variant === "home") {
-    return (
-      <Breadcrumbs aria-label="breadcrumb" sx={{ mb: { xs: 1.5, sm: 2 } }}>
-        <Typography color="text.primary">{campaignsLabel}</Typography>
-      </Breadcrumbs>
-    );
+    return null;
   }
 
   return (

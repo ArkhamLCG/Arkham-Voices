@@ -56,7 +56,7 @@ export function Header() {
             component={Link}
             href={`/${language}`}
             noWrap
-            underline="hover"
+            underline="none"
             variant="h6"
             aria-label={t("header.home", "Home")}
             sx={{
