@@ -68,7 +68,7 @@ void i18n.use(initReactI18next).init({
         },
         announces: {
           appTagline: "Мой новый проект",
-          appTitle: "Цифровая планшет сыщика",
+          appTitle: "Цифровой планшет сыщика",
           iosUnlock: "Разблокировка",
         },
       },
