@@ -13,7 +13,7 @@ import {
 import { campaignRoute, getCampaignIdFromPath, useAppContext } from "@shared/lib";
 import { Icon } from "@shared/ui";
 import { groupBy, isNotNil } from "ramda";
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { Link, useLocation } from "wouter";
 
 export function CategoriesList({ sx, ...rest }: BoxProps) {
@@ -51,7 +51,7 @@ export function CategoriesList({ sx, ...rest }: BoxProps) {
           >
             <List disablePadding>
               {groups.map((campaigns, index) => (
-                <>
+                <Fragment key={campaigns[0].id}>
                   {index > 0 && <Divider sx={{ my: 2 }} />}
                   {campaigns.map((c) => (
                     <ListItemButton
@@ -76,7 +76,7 @@ export function CategoriesList({ sx, ...rest }: BoxProps) {
                       />
                     </ListItemButton>
                   ))}
-                </>
+                </Fragment>
               ))}
               {side && (
                 <>

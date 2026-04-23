@@ -40,10 +40,10 @@ export function CampaignPage() {
   const [campaign, setCampaign] = useState<CampaignNarrationIndex | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  const currentListName = useMemo(
-    () => campaigns.find((c) => c.id === campaignId)?.name ?? campaign?.name ?? campaignId ?? "",
-    [campaigns, campaignId, campaign?.name],
-  );
+  const currentListName = useMemo(() => {
+    const campaign = campaigns.find((c) => c.id === campaignId);
+    return campaign?.name ?? campaignId;
+  }, [campaigns, campaignId]);
 
   useEffect(() => {
     fetchCampaign({ language, campaignId }).then(setCampaign);
@@ -64,7 +64,7 @@ export function CampaignPage() {
 
   return (
     <Container maxWidth="lg" sx={{ px: { xs: 1.5, sm: 2, md: 3 } }}>
-      <PageBreadcrumbs campaignName={campaign?.name ?? campaignId ?? ""} variant="campaign" />
+      <PageBreadcrumbs campaignName={currentListName} variant="campaign" />
       <Row
         sx={{
           alignItems: "stretch",
