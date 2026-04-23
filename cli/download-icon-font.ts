@@ -1,5 +1,5 @@
 import "./util/env";
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { ROOT } from "./util/storage";
 
@@ -16,6 +16,7 @@ export const download = async (type: string) => {
 
   const outFile = path.join(outDir, `icons.${type}`);
 
+  mkdirSync(outDir, { recursive: true });
   writeFileSync(outFile, Buffer.from(data));
 };
 
