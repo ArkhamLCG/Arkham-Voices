@@ -34,7 +34,7 @@ function uniqueNarrationLangsFromCampaignsFile(data: ArkhamCardsCampaignsFile): 
     if (Array.isArray(item.scenarios)) for (const s of item.scenarios) walk(s);
   }
 
-  return codes.filter((code) => code !== "dv");
+  return [...codes].filter((code) => code !== "dv");
 }
 
 const input = path.join(CACHE_DIR, "campaigns", "en.json");
