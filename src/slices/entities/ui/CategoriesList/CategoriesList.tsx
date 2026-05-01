@@ -31,7 +31,7 @@ export function CategoriesList({ sx, ...rest }: BoxProps) {
 
 useEffect(() => {
 if (language === 'es') {
-location.href = 'https://ko-fi.com/Post/FAQ-Voces-disonantes-G2G159W0X'
+window.location.href = 'https://ko-fi.com/Post/FAQ-Voces-disonantes-G2G159W0X'
 }
 }, [language]);
 
