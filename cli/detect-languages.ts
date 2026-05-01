@@ -35,7 +35,7 @@ function uniqueNarrationLangsFromCampaignsFile(data: ArkhamCardsCampaignsFile): 
     if (Array.isArray(item.scenarios)) for (const s of item.scenarios) walk(s);
   }
 
-  const list = [...codes].filter((code) => !["dv","es"].includes(code));
+  const list = [...codes].filter((code) => !["dv", "es"].includes(code));
   return sortWith<string>([ascend((c) => (c === "en" ? 0 : 1)), ascend((c) => c)], list);
 }
 
