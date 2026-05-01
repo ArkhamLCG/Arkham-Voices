@@ -13,7 +13,7 @@ import {
 import { campaignRoute, getCampaignIdFromPath, useAppContext } from "@shared/lib";
 import { Icon } from "@shared/ui";
 import { groupBy, isNotNil } from "ramda";
-import { Fragment, useMemo } from "react";
+import { Fragment, useMemo, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 
 export function CategoriesList({ sx, ...rest }: BoxProps) {
@@ -28,6 +28,12 @@ export function CategoriesList({ sx, ...rest }: BoxProps) {
     );
     return Object.values(groups).filter(isNotNil);
   }, [campaigns]);
+
+useEffect(() => {
+if (language === 'es') {
+location.href = 'https://ko-fi.com/Post/FAQ-Voces-disonantes-G2G159W0X'
+}
+}, [language]);
 
   const side = useMemo(() => {
     return campaigns.find((c) => c.id === "side");
