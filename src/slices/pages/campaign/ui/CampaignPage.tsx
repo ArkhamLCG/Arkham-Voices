@@ -1,4 +1,4 @@
-import { filterSideScenarios } from "@entities/lib";
+import { filterSideScenarios, useAllowedLanguage } from "@entities/lib";
 import { CategoriesList } from "@entities/ui";
 import DownloadIcon from "@mui/icons-material/Download";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -40,15 +40,14 @@ export function CampaignPage() {
   const [campaign, setCampaign] = useState<CampaignNarrationIndex | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
+  useAllowedLanguage();
+
   const currentListName = useMemo(() => {
     const campaign = campaigns.find((c) => c.id === campaignId);
     return campaign?.name ?? campaignId;
   }, [campaigns, campaignId]);
 
   useEffect(() => {
-    if (language === 'es') {
-location.href = 'https://ko-fi.com/Post/FAQ-Voces-disonantes-G2G159W0X'
-}
     fetchCampaign({ language, campaignId }).then(setCampaign);
   }, [language, campaignId]);
 

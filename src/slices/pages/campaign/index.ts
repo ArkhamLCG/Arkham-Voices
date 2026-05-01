@@ -1,1 +1,1 @@
-export { CampaignPage } from "./ui/CampaignPage";
+export * from "./ui";

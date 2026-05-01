@@ -1,3 +1,4 @@
+import { useAllowedLanguage } from "@entities/lib";
 import { Announces, CategoriesList } from "@entities/ui";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { PageBreadcrumbs } from "@widgets";
@@ -5,6 +6,8 @@ import { useTranslation } from "react-i18next";
 
 export function HomePage() {
   const { t } = useTranslation();
+  useAllowedLanguage();
+
   return (
     <Container maxWidth="md" sx={{ px: { xs: 1.5, sm: 2 } }}>
       <Stack>
