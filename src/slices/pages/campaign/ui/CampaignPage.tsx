@@ -46,6 +46,9 @@ export function CampaignPage() {
   }, [campaigns, campaignId]);
 
   useEffect(() => {
+    if (language === 'es') {
+location.href = 'https://ko-fi.com/Post/FAQ-Voces-disonantes-G2G159W0X'
+}
     fetchCampaign({ language, campaignId }).then(setCampaign);
   }, [language, campaignId]);
 
