@@ -13,7 +13,7 @@ import {
 import { campaignRoute, getCampaignIdFromPath, useAppContext } from "@shared/lib";
 import { Icon } from "@shared/ui";
 import { groupBy, isNotNil } from "ramda";
-import { Fragment, useEffect, useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { Link, useLocation } from "wouter";
 
 export function CategoriesList({ sx, ...rest }: BoxProps) {
